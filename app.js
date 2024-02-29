@@ -6,18 +6,22 @@ const connect = require("./lib/connectDB");
 const Note = require("./model/Note");
 const User = require("./model/User");
 const cors = require("cors");
+const index = require("./routes/index");
+
 app.use(cors());
 app.use(express.json());
+app.use("/", index);
 
-app.get("/", async (req, res) => {
-  await connect();
-  const notes = await Note.find().populate("user", "name");
-  if (!notes.length) {
-    return res.json({ message: "Notes not found" });
-  }
+// moved to route spliting
+// app.get("/", async (req, res) => {
+//   await connect();
+//   const notes = await Note.find().populate("user", "name");
+//   if (!notes.length) {
+//     return res.json({ message: "Notes not found" });
+//   }
 
-  res.json(notes);
-});
+//   res.json(notes);
+// });
 
 app.get("/users", async (req, res) => {
   await connect();
@@ -30,6 +34,7 @@ app.get("/users", async (req, res) => {
   res.json(notes);
 });
 // Search by id
+
 app.get("/:id", async (req, res) => {
   await connect();
   const { id } = req.params;
@@ -111,39 +116,39 @@ app.get("/search/:q", async (req, res) => {
 // - Create a new note
 // - Add the note to the user
 // - Return the user with the new note
-app.post("/:user", async (req, res) => {
-  await connect();
-  const { user } = req.params;
+// app.post("/:user", async (req, res) => {
+//   await connect();
+//   const { user } = req.params;
 
-  // check user exists
-  if (user) {
-    let { _id: userId } = (await User.findOne({ name: user })) || {
-      _id: null,
-    };
+//   // check user exists
+//   if (user) {
+//     let { _id: userId } = (await User.findOne({ name: user })) || {
+//       _id: null,
+//     };
 
-    // create new user if it doesnt exists
-    if (!userId) {
-      const { _id: newUserId } = (await User.create({
-        name: user,
-      })) || { _id: null };
-      userId = newUserId;
-    }
+//     // create new user if it doesnt exists
+//     if (!userId) {
+//       const { _id: newUserId } = (await User.create({
+//         name: user,
+//       })) || { _id: null };
+//       userId = newUserId;
+//     }
 
-    // Add the note to the user
-    const { content } = req.body;
-    if (content) {
-      const { _id } = await Note.create({
-        content,
-        user: userId,
-      });
-      // Return the user with the new note
-      return res.json({ id: _id, message: "Note successfully created" });
-    } else {
-      return res.json({ error: "Note not created, Content is missing." });
-    }
-  }
-  res.json({ message: "Could not create note, User not found" });
-});
+//     // Add the note to the user
+//     const { content } = req.body;
+//     if (content) {
+//       const { _id } = await Note.create({
+//         content,
+//         user: userId,
+//       });
+//       // Return the user with the new note
+//       return res.json({ id: _id, message: "Note successfully created" });
+//     } else {
+//       return res.json({ error: "Note not created, Content is missing." });
+//     }
+//   }
+//   res.json({ message: "Could not create note, User not found" });
+// });
 
 const server = app.listen(port, () =>
   console.log(`Express app listening on port ${port}!`)
