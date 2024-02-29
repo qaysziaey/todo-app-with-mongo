@@ -5,6 +5,8 @@ const port = process.env.PORT || 3000;
 const connect = require("./lib/connectDB");
 const Note = require("./model/Note");
 const User = require("./model/User");
+const cors = require("cors");
+app.use(cors());
 app.use(express.json());
 
 app.get("/", async (req, res) => {
