@@ -19,6 +19,16 @@ app.get("/", async (req, res) => {
   res.json(notes);
 });
 
+app.get("/users", async (req, res) => {
+  await connect();
+  const notes = await Note.find().populate("user", "name");
+
+  if (!notes.length) {
+    return res.json({ message: "Notes not found" });
+  }
+
+  res.json(notes);
+});
 // Search by id
 app.get("/:id", async (req, res) => {
   await connect();
