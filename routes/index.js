@@ -5,7 +5,7 @@ const userRoute = require("./users.route");
 const User = require("../model/User");
 
 const route = Router();
-route.use("/:users", userRoute);
+route.use("/:user", userRoute);
 
 route.get("/", async (req, res) => {
   await connect();
