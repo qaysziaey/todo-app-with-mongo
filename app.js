@@ -92,6 +92,7 @@ app.put("/:noteId", async (req, res) => {
     return res.json({ message: "Note not found" });
   }
   res.json(updateNote);
+  res.json({ message: "Note successfully updated" });
 });
 
 // Search note by a search query
