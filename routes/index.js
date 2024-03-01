@@ -2,7 +2,7 @@ const { Router } = require("express");
 const Note = require("../model/Note");
 const connect = require("../lib/connectDB");
 const userRoute = require("./users.route");
-const User = require("..Note/model/User");
+const User = require("../model/User");
 
 const route = Router();
 route.use("/:users", userRoute);
