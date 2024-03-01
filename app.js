@@ -4,7 +4,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 const connect = require("./lib/connectDB");
 const Note = require("./model/Note");
-const User = require("./model/User");
+// const User = require("./model/User");
 const cors = require("cors");
 const index = require("./routes/index");
 
