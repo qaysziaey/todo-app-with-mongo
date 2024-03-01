@@ -17,4 +17,14 @@ route.get("/", async (req, res) => {
   res.json(notes);
 });
 
+route.get("/users", async (req, res) => {
+  await connect();
+  const notes = await Note.find().populate("user", "name");
+
+  if (!notes.length) {
+    return res.json({ message: "Notes not found" });
+  }
+
+  res.json(notes);
+});
 module.exports = route;

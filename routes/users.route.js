@@ -3,6 +3,9 @@ const Note = require("../model/Note");
 const connect = require("../lib/connectDB");
 const User = require("../model/User");
 const route = Router({ mergeParams: true });
+const noteRoute = require("./notes.route");
+
+route.use("/:noteId", noteRoute);
 
 // - Create a user if it doesnt exists
 // - Create a new note
