@@ -33,8 +33,8 @@ app.get("/users", async (req, res) => {
 
   res.json(notes);
 });
-// Search by id
 
+// Search by id
 app.get("/:id", async (req, res) => {
   await connect();
   const { id } = req.params;

@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const Note = require("../model/Note");
 const connect = require("../lib/connectDB");
+const User = require("../model/User");
 const route = Router({ mergeParams: true });
 
 // - Create a user if it doesnt exists
