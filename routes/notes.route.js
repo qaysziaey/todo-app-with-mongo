@@ -19,6 +19,21 @@ route.get("/", async (req, res) => {
     res.status(500).send({ message: "User not found" });
   }
 });
+
+// Search by name
+route.get("/", async (req, res) => {
+  await connect();
+  const { userName } = req.params;
+  try {
+    const content = await Note.find({ name: userName });
+    if (!content) {
+      return res.json({ message: "Note not found" });
+    }
+    res.json(content);
+  } catch (error) {
+    res.status(500).send({ message: "User not found" });
+  }
+});
 // Edit by id
 route.put("/", async (req, res) => {
   await connect();
@@ -36,9 +51,11 @@ route.put("/", async (req, res) => {
 
 // Delete by id
 route.delete("/", async (req, res) => {
+  console.log("Hello world");
   await connect();
   const { user, noteId: note_id } = req.params;
 
+  console.log(user);
   const { _id: userId } = (await Note.findOne({ name: user })) || { _id: null };
 
   if (!userId) {
