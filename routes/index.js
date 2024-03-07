@@ -7,9 +7,9 @@ const route = Router();
 route.use("/:user", userRoute);
 
 route.get("/", async (req, res) => {
-  console.log("Hello from mongo");
   await connect();
   const notes = await Note.find().populate("user", "name");
+  console.log(notes);
   if (!notes.length) {
     return res.json({ message: "Notes not found" });
   }

@@ -45,4 +45,20 @@ route.post("/", async (req, res) => {
   res.json({ message: "Could not create note, User not found" });
 });
 
+// Search by name
+route.get("/users/", async (req, res) => {
+  await connect();
+  const { userName } = req.params;
+  console.log(userName);
+  try {
+    const content = await Note.find({ name: userName });
+    if (!content) {
+      return res.json({ message: "Note not found" });
+    }
+    res.json(content);
+  } catch (error) {
+    res.status(500).send({ message: "User not found" });
+  }
+});
+
 module.exports = route;

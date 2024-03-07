@@ -20,20 +20,6 @@ route.get("/", async (req, res) => {
   }
 });
 
-// Search by name
-route.get("/", async (req, res) => {
-  await connect();
-  const { userName } = req.params;
-  try {
-    const content = await Note.find({ name: userName });
-    if (!content) {
-      return res.json({ message: "Note not found" });
-    }
-    res.json(content);
-  } catch (error) {
-    res.status(500).send({ message: "User not found" });
-  }
-});
 // Edit by id
 route.put("/", async (req, res) => {
   await connect();
